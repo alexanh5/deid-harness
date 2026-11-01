@@ -1,0 +1,16 @@
+# Raw data never goes in git (Enron corpus, labeled sets with real names)
+data/
+# Engine responses (may contain original text and API output)
+cache/
+# Secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/
