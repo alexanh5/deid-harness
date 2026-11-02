@@ -1,6 +1,6 @@
 # Labeling Guidelines: Enron Email Bodies
 
-Version 0.1 (November 1, 2026). Update this file whenever an edge case is decided, and record the change in the changelog at the bottom. Labels are only as good as the rules behind them.
+Version 0.2 (November 1, 2026). Update this file whenever an edge case is decided, and record the change in the changelog at the bottom. Labels are only as good as the rules behind them.
 
 ## Purpose
 
@@ -55,11 +55,14 @@ If you find sensitive text that fits none of these types, do not invent a new la
 - Label first-name-only references (`Phillip, call me`) and sign-offs (`Thanks, Phil`).
 - Label initials when they stand in for a person (`-PKA`), not when they are an abbreviation for something else.
 - Generic references (`the trader`, `my boss`) are not labeled.
+- First name plus last initial (`Patti S`) is one span.
 
 **ORGANIZATION**
 - Include legal suffixes (`Inc.`, `Corp.`, `LLC`).
 - Enron business-unit abbreviations (`ECT`, `EES`, `EOL`, `ENA`) are labeled when they appear as words in the text.
 - Generic references (`the utility`, `the pipeline`) are not labeled.
+- A city name (`Denver`) used for an office, desk, or counterparty is ORGANIZATION; a city as a place is LOCATION.
+- A deal (`Hubert`) named for a party gets that party's type, defaulting to ORGANIZATION when unclear.
 
 **DATE_TIME**
 - Label explicit dates and times, including partial dates (`Oct. 25`, `10/25`).
@@ -128,7 +131,14 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
 |---|---|---|---|---|
 | 2026-11-01 | (playground) | `John Deere` | `ORGANIZATION` | General rule 6 |
 | 2026-11-01 | (playground) | `$30k or more` | `MONEY` on `$30k` only | General rule 3 |
+| 2026-11-01 | `<13505866.1075863688222.JavaMail.evans@thyme>` | `Patti S` | `PERSON`, one span | PERSON rules (new bullet); applies general rule 5 |
+| 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Denver` | `ORGANIZATION`, city used as office/counterparty | ORGANIZATION rules (new bullet); applies general rule 6 |
+| 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Hubert` | `ORGANIZATION`, deal named for a party | ORGANIZATION rules (new bullet); applies general rule 7 |
 
 ## Changelog
 
 - **0.1 (2026-11-01):** Initial schema (10 types), general and type-specific rules, Enron patterns, Textual mapping, metric definitions.
+- **0.2 (2026-11-01):** Calibration batch (messages 1-10)
+  - PERSON: first name plus last initial is one span.
+  - ORGANIZATION: a city name used for an office, desk, or counterparty is ORGANIZATION; a city as a place is LOCATION.
+  - ORGANIZATION: a deal named for a party gets that party's type, defaulting to ORGANIZATION when unclear.
