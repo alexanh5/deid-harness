@@ -1,0 +1,30 @@
+<!--
+  Label Studio labeling config for deid-harness.
+  Schema and rules: docs/labeling-guidelines.md (keep the label values in sync).
+  Import tasks as JSON with a "text" field holding the normalized body,
+  plus "message_id" and "text_sha256" for the round-trip check.
+-->
+<View>
+  <Header value="$message_id"/>
+
+  <Labels name="label" toName="text">
+    <Label value="PERSON"        background="#E15759" hotkey="p"/>
+    <Label value="ORGANIZATION"  background="#4E79A7" hotkey="o"/>
+    <Label value="EMAIL_ADDRESS" background="#F28E2B" hotkey="e"/>
+    <Label value="PHONE_NUMBER"  background="#76B7B2" hotkey="t"/>
+    <Label value="ADDRESS"       background="#59A14F" hotkey="a"/>
+    <Label value="LOCATION"      background="#8CD17D" hotkey="l"/>
+    <Label value="DATE_TIME"     background="#EDC948" hotkey="d"/>
+    <Label value="MONEY"         background="#B07AA1" hotkey="m"/>
+    <Label value="URL"           background="#FF9DA7" hotkey="u"/>
+    <Label value="IDENTIFIER"    background="#9C755F" hotkey="i"/>
+  </Labels>
+
+  <Text name="text" value="$text"/>
+
+  <Choices name="review" toName="text" choice="single" showInline="true">
+    <Choice value="Needs review"/>
+  </Choices>
+
+  <TextArea name="notes" toName="text" placeholder="Edge case notes (what, why, proposed rule)" rows="2" maxSubmissions="1"/>
+</View>
