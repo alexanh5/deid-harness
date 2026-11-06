@@ -63,6 +63,7 @@ If you find sensitive text that fits none of these types, do not invent a new la
 - Generic references (`the utility`, `the pipeline`) are not labeled.
 - A city name (`Denver`) used for an office, desk, or counterparty is ORGANIZATION; a city as a place is LOCATION.
 - A deal (`Hubert`) named for a party gets that party's type, defaulting to ORGANIZATION when unclear.
+- A named pipeline (`Trailblazer`, `NWPL`) is ORGANIZATION, even when used as a trading point.
 
 **DATE_TIME**
 - Label explicit dates and times, including partial dates (`Oct. 25`, `10/25`).
@@ -71,11 +72,13 @@ If you find sensitive text that fits none of these types, do not invent a new la
 
 **MONEY**
 - Label the amount with its currency marker only: `$3.50/MMBtu` → `$3.50`.
-- An amount needs a currency symbol or currency word to be `MONEY`: `25 cents` is labeled; `50,000 MMBtu` is a volume and is not.
+- - An amount needs a currency symbol or currency word to be `MONEY`: `25 cents` is labeled; `50,000 MMBtu` is a volume and is not. Exception: an amount with no marker is `MONEY` when the context makes it a price, bid, or payment (`My bid of 2.7 million`, `available in the 180's`).
 
 **ADDRESS and LOCATION**
 - A street address is one `ADDRESS` span, even when it crosses a line break. Do not split it into street, city, state, and zip.
 - Standalone place names are `LOCATION`. Trading points and pipeline delivery points that name a place (`Henry Hub`, `SoCal Border`) are `LOCATION`.
+- A named property or building, such as an apartment complex (`Chelsea Villa`) or office building is `LOCATION`.
+- A deal (`Burnet`) named for a place gets `LOCATION`.
 
 **IDENTIFIER**
 - Label the value, not its label: `Deal #458721` → `458721`.
@@ -134,6 +137,12 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
 | 2026-11-01 | `<13505866.1075863688222.JavaMail.evans@thyme>` | `Patti S` | `PERSON`, one span | PERSON rules (new bullet); applies general rule 5 |
 | 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Denver` | `ORGANIZATION`, city used as office/counterparty | ORGANIZATION rules (new bullet); applies general rule 6 |
 | 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Hubert` | `ORGANIZATION`, deal named for a party | ORGANIZATION rules (new bullet); applies general rule 7 |
+| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Chelsea Villa` | `LOCATION`, named property | ADDRESS and LOCATION rules (new bullet); building rule in schema |
+| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `stage coach` | `LOCATION`, likely a named property; Needs review | ADDRESS and LOCATION rules (new bullet); applies general rule 7|
+| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Burnet` | `LOCATION`, deal named for a place; Needs review | ADDRESS and LOCATION rules (new bullet); applies general rule 6|
+| 2026-11-05 | `<22955100.1075855688377.JavaMail.evans@thyme>` | `NWPL` | `ORGANIZATION`, named pipeline used as a trading point | ORGANIZATION rules (new bullet); records the Trailblazer decision|
+| 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `2.7 million` | `MONEY`, bid amount with no currency marker | MONEY rules (exception added); applies general rule 6|
+| 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `180's` | `MONEY`, price range with no currency marker  | MONEY rules (exception added) |
 
 ## Changelog
 
@@ -142,3 +151,7 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
   - PERSON: first name plus last initial is one span.
   - ORGANIZATION: a city name used for an office, desk, or counterparty is ORGANIZATION; a city as a place is LOCATION.
   - ORGANIZATION: a deal named for a party gets that party's type, defaulting to ORGANIZATION when unclear.
+  - LOCATION: a named property or building (apartment complex, office building) is LOCATION.
+  - LOCATION: a deal named for a place gets LOCATION.
+  - ORGANIZATION: a named pipeline is ORGANIZATION, even when used as a trading point.
+  - MONEY: an amount with no currency marker is MONEY when context makes it a price, bid, or payment.
