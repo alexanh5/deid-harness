@@ -139,7 +139,7 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
 | 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Denver` | `ORGANIZATION`, city used as office/counterparty | ORGANIZATION rules (new bullet); applies general rule 6 |
 | 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Hubert` | `ORGANIZATION`, deal named for a party | ORGANIZATION rules (new bullet); applies general rule 7 |
 | 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Chelsea Villa` | `LOCATION`, named property | ADDRESS and LOCATION rules (new bullet); building rule in schema |
-| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `stage coach` | `LOCATION`, likely a named property; Needs review | ADDRESS and LOCATION rules (new bullet); applies general rule 7|
+| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `stage coach` | `LOCATION`, named property | ADDRESS and LOCATION rules (named-property bullet); confirmed 2026-11-11 by "rent roll" here and the Lucy Gonzalez header in `<5946371.1075855689136.JavaMail.evans@thyme>` |
 | 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Burnet` | `LOCATION`, deal named for a place | ADDRESS and LOCATION rules (new bullet); applies general rule 6|
 | 2026-11-05 | `<22955100.1075855688377.JavaMail.evans@thyme>` | `NWPL` | `ORGANIZATION`, named pipeline used as a trading point | ORGANIZATION rules (new bullet); records the Trailblazer decision|
 | 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `2.7 million` | `MONEY`, bid amount with no currency marker | MONEY rules (exception added); applies general rule 6|
@@ -149,7 +149,7 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
 ## Changelog
 
 - **0.1 (2026-11-01):** Initial schema (10 types), general and type-specific rules, Enron patterns, Textual mapping, metric definitions.
-- **0.2 (2026-11-01):** Calibration batch (messages 1-10)
+- **0.2 (2026-11-11):** Calibration batch (messages 1-10)
   - PERSON: first name plus last initial is one span.
   - ORGANIZATION: a city name used for an office, desk, or counterparty is ORGANIZATION; a city as a place is LOCATION.
   - ORGANIZATION: a deal named for a party gets that party's type, defaulting to ORGANIZATION when unclear.
