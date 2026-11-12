@@ -67,12 +67,13 @@ If you find sensitive text that fits none of these types, do not invent a new la
 
 **DATE_TIME**
 - Label explicit dates and times, including partial dates (`Oct. 25`, `10/25`).
+- A month name on its own (`September`) is labeled.
 - Do not label relative expressions (`tomorrow`, `next week`), standalone weekdays (`Monday`), standalone years (`2001`), or durations (`two weeks`).
 - Record any engine predictions on these excluded forms as false positives; do not change the labels to match an engine.
 
 **MONEY**
 - Label the amount with its currency marker only: `$3.50/MMBtu` → `$3.50`.
-- - An amount needs a currency symbol or currency word to be `MONEY`: `25 cents` is labeled; `50,000 MMBtu` is a volume and is not. Exception: an amount with no marker is `MONEY` when the context makes it a price, bid, or payment (`My bid of 2.7 million`, `available in the 180's`).
+- An amount needs a currency symbol or currency word to be `MONEY`: `25 cents` is labeled; `50,000 MMBtu` is a volume and is not. Exception: an amount with no marker is `MONEY` when the context makes it a price, bid, or payment (`My bid of 2.7 million`, `available in the 180's`).
 
 **ADDRESS and LOCATION**
 - A street address is one `ADDRESS` span, even when it crosses a line break. Do not split it into street, city, state, and zip.
@@ -139,10 +140,11 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
 | 2026-11-01 | `<21687372.1075855688094.JavaMail.evans@thyme>` | `Hubert` | `ORGANIZATION`, deal named for a party | ORGANIZATION rules (new bullet); applies general rule 7 |
 | 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Chelsea Villa` | `LOCATION`, named property | ADDRESS and LOCATION rules (new bullet); building rule in schema |
 | 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `stage coach` | `LOCATION`, likely a named property; Needs review | ADDRESS and LOCATION rules (new bullet); applies general rule 7|
-| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Burnet` | `LOCATION`, deal named for a place; Needs review | ADDRESS and LOCATION rules (new bullet); applies general rule 6|
+| 2026-11-05 | `<11482982.1075855688356.JavaMail.evans@thyme>` | `Burnet` | `LOCATION`, deal named for a place | ADDRESS and LOCATION rules (new bullet); applies general rule 6|
 | 2026-11-05 | `<22955100.1075855688377.JavaMail.evans@thyme>` | `NWPL` | `ORGANIZATION`, named pipeline used as a trading point | ORGANIZATION rules (new bullet); records the Trailblazer decision|
 | 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `2.7 million` | `MONEY`, bid amount with no currency marker | MONEY rules (exception added); applies general rule 6|
 | 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `180's` | `MONEY`, price range with no currency marker  | MONEY rules (exception added) |
+| 2026-11-11 | `<8958723.1075855688792.JavaMail.evans@thyme>`  | `September` | `DATE_TIME`, a bare month | DATE_TIME rules (new bullet); aligns with HIPAA date elements |
 
 ## Changelog
 
@@ -155,3 +157,4 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
   - LOCATION: a deal named for a place gets LOCATION.
   - ORGANIZATION: a named pipeline is ORGANIZATION, even when used as a trading point.
   - MONEY: an amount with no currency marker is MONEY when context makes it a price, bid, or payment.
+  - DATE_TIME: a month name on its own is DATE_TIME.
