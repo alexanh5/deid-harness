@@ -64,12 +64,14 @@ If you find sensitive text that fits none of these types, do not invent a new la
 - A city name (`Denver`) used for an office, desk, or counterparty is ORGANIZATION; a city as a place is LOCATION.
 - A deal (`Hubert`) named for a party gets that party's type, defaulting to ORGANIZATION when unclear.
 - A named pipeline (`Trailblazer`, `NWPL`) is ORGANIZATION, even when used as a trading point.
+- A committee, team, or department name is labeled on the organization it names only: `ENA Management Committee` → `ENA`.
 
 **DATE_TIME**
 - Label explicit dates and times, including partial dates (`Oct. 25`, `10/25`).
 - A month name on its own (`September`) is labeled.
 - Do not label relative expressions (`tomorrow`, `next week`), standalone weekdays (`Monday`), standalone years (`2001`), or durations (`two weeks`).
 - Record any engine predictions on these excluded forms as false positives; do not change the labels to match an engine.
+- A range is two spans, one per end: `2:30 pm - 4:30 pm` → `2:30 pm`, `4:30 pm`.
 
 **MONEY**
 - Label the amount with its currency marker only: `$3.50/MMBtu` → `$3.50`.
@@ -80,11 +82,15 @@ If you find sensitive text that fits none of these types, do not invent a new la
 - Standalone place names are `LOCATION`. Trading points and pipeline delivery points that name a place (`Henry Hub`, `SoCal Border`) are `LOCATION`.
 - A named property or building, such as an apartment complex (`Chelsea Villa`) or office building is `LOCATION`.
 - A deal (`Burnet`) named for a place gets `LOCATION`.
+- A room or suite code with no named building or address (`30C1`) is not labeled.
 
 **IDENTIFIER**
 - Label the value, not its label: `Deal #458721` → `458721`.
 - Phone and fax numbers are `PHONE_NUMBER`, not `IDENTIFIER`.
 - Counts, volumes, prices, and percentages are not identifiers.
+
+**PHONE_NUMBER**
+- A short internal extension used as a phone number (`call me (3-0643)`) is PHONE_NUMBER.
 
 ## Enron-specific patterns
 
@@ -145,6 +151,10 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
 | 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `2.7 million` | `MONEY`, bid amount with no currency marker | MONEY rules (exception added); applies general rule 6|
 | 2026-11-05 | `<14974170.1075855688529.JavaMail.evans@thyme>` | `180's` | `MONEY`, price range with no currency marker  | MONEY rules (exception added) |
 | 2026-11-11 | `<8958723.1075855688792.JavaMail.evans@thyme>`  | `September` | `DATE_TIME`, a bare month | DATE_TIME rules (new bullet); aligns with HIPAA date elements |
+| 2026-11-11 | `<13302421.1075855689330.JavaMail.evans@thyme>`  | `call me (3-0643)` | `PHONE_NUMBER`, a short internal extension used as a phone number | PHONE_NUMBER rules (new bullet); applies general rule 6 |
+| 2026-11-11 | `<13302421.1075855689330.JavaMail.evans@thyme>` | `2:30 pm - 4:30 pm` | `DATE_TIME`, two spans | DATE_TIME rules (new bullet); applies general rule 3 |
+| 2026-11-11 | `<13302421.1075855689330.JavaMail.evans@thyme>` | `ENA Management Committee` | `ORGANIZATION` on `ENA` only | ORGANIZATION rules (new bullet); applies general rule 3 |
+| 2026-11-11 | `<13302421.1075855689330.JavaMail.evans@thyme>` | `30C1` | Not labeled; room code with no named building | ADDRESS and LOCATION rules (new bullet) |
 
 ## Changelog
 
@@ -158,3 +168,8 @@ Add a row for every case decided during labeling. Cite the message ID so the dec
   - ORGANIZATION: a named pipeline is ORGANIZATION, even when used as a trading point.
   - MONEY: an amount with no currency marker is MONEY when context makes it a price, bid, or payment.
   - DATE_TIME: a month name on its own is DATE_TIME.
+- **0.3 (2026-11-11):** Remaining batch (messages 11-100)
+  - PHONE_NUMBER: a short internal extension used as a phone number is PHONE_NUMBER.
+  - DATE_TIME: a range is two spans, one per end.
+  - ORGANIZATION: a committee, team, or department name is labeled on the organization it names only.
+  - LOCATION: a room or suite code with no named building or address is not labeled.
